@@ -12,6 +12,12 @@ class GameService:
         self.segundo_boton = None
 
     def cambiar_imagen(self, row, col):
+        button = self.buttons[row][col]
+
+        # Si el botón ya está deshabilitado, no hacer nada
+        if not button["state"] == "normal":
+            return
+
         # Obtener la imagen de la matriz
         imagen = self.matriz_imagenes[row][col].direccion_imagen
         nueva_imagen = Image.open(imagen)
@@ -19,7 +25,6 @@ class GameService:
         nueva_photo = ImageTk.PhotoImage(nueva_imagen)
 
         # Cambiar la imagen del botón seleccionado
-        button = self.buttons[row][col]
         button.config(image=nueva_photo)
         button.image = nueva_photo  # Mantener una referencia a la imagen
 
@@ -30,7 +35,11 @@ class GameService:
             self.segundo_boton = (row, col)
         else:
             # Si ya hay dos botones seleccionados, comparar si son pareja
-            if not self.son_pareja(self.primer_boton, self.segundo_boton):
+            if self.son_pareja(self.primer_boton, self.segundo_boton):
+                # Deshabilitar los botones si son pareja
+                self.deshabilitar_boton(self.primer_boton)
+                self.deshabilitar_boton(self.segundo_boton)
+            else:
                 # Si no son pareja, regresar las imágenes a la oculta
                 self.ocultar_imagen(self.primer_boton)
                 self.ocultar_imagen(self.segundo_boton)
@@ -47,4 +56,26 @@ class GameService:
         row, col = boton
         button = self.buttons[row][col]
         button.config(image=self.photo_oculta)
-        button.image = self.photo_oculta  # Mantener una referencia a la imagen ocult
+        button.image = self.photo_oculta  # Mantener una referencia a la imagen oculta
+
+    def deshabilitar_boton(self, boton):
+        row, col = boton
+        button = self.buttons[row][col]
+        button.config(state="disable")
+
+
+    def reiniciar_juego(self):
+        # Implementar la lógica para reiniciar el juego
+        pass
+
+    def nuevo_empareja2(self):
+        # Implementar la lógica para iniciar un nuevo juego
+        pass
+
+    def eliminar_empareja2(self):
+        # Implementar la lógica para eliminar el juego actual
+        pass
+
+    def cargar_empareja2(self):
+        # Implementar la lógica para cargar un juego existente
+        pass

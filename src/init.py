@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, Menu
 from model.image import Imagen
 from PIL import Image, ImageTk
 from service.imageService import ImageService
@@ -55,6 +55,21 @@ matriz_imagenes = image_service.llenar_matriz_aleatoria(imagenes, longitud)
 # Crear la ventana principal
 root = tk.Tk()
 root.title("Juego de Emparejados - Aves")
+
+# Crear la barra de menú
+menu_bar = Menu(root)
+root.config(menu=menu_bar)
+
+# Menú "Opciones"
+opciones_menu = Menu(menu_bar, tearoff=0)
+menu_bar.add_cascade(label="Opciones", menu=opciones_menu)
+opciones_menu.add_command(label="Reiniciar", command=lambda: game_service.reiniciar_juego())
+opciones_menu.add_command(label="Nuevo empareja2", command=lambda: game_service.nuevo_empareja2())
+opciones_menu.add_command(label="Eliminar empareja2", command=lambda: game_service.eliminar_empareja2())
+
+# Menú "Cargar empareja2"
+menu_bar.add_command(label="Cargar empareja2", command=lambda: game_service.cargar_empareja2())
+
 
 # Crear un contenedor para la tabla
 frame = ttk.Frame(root)
